@@ -1,0 +1,90 @@
+@accent-color: #380091;
+body {
+  font: 14px 'Open Sans', Helvetica, Arial, sans-serif;
+}
+
+.title {
+  a {
+    color: #444;
+    list-style: none;
+    b {
+      color: @accent-color;
+    }
+  }
+}
+
+#home {
+  margin-top: -20px
+}
+
+#home-header {
+  background-image: radial-gradient(
+    circle at top left,
+    #AE01BB, 
+    @accent-color);
+  color: white;
+  .form-control {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    transition: none;
+    padding: 80px 0;
+    color: white;
+    font-size: 2em;
+    text-align: center;
+  }
+  .form-control::-webkit-input-placeholder {
+    color: white;
+  }
+  .form-control:-moz-placeholder {
+   color: white;
+  }
+  .form-control::-moz-placeholder {
+     color: white;
+  }
+  .form-control:-ms-input-placeholder {  
+     color: white;
+  }
+}
+
+#footer {
+  font-style: italic;
+  color: #aaa;
+  a {
+    color: #aaa;
+  }
+}
+
+ul {
+  column-count: 2;
+  list-style: none;
+}
+
+h1 {
+  color: @accent-color;
+}
+
+h3 {
+  color: #9B9B9B;
+  font-weight: normal;
+}
+
+// Course detail page
+
+.table th, .table td { 
+  border-color: #EEE !important;
+}
+
+.progress {
+  background-color: transparent;
+  border: 2px solid @accent-color;
+  border-radius: 100px;
+  height: 24px;
+  .progress-bar {
+    background-color: @accent-color;
+    border-radius: 100px;
+    box-shadow: none;
+  }
+}
+
+

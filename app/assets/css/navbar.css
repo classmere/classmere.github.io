@@ -1,0 +1,48 @@
+.navbar-default {
+  background-color: white;
+  box-shadow: 0px -2px 8px 2px rgba(0, 0, 0, 0.05);
+}
+.navbar-default .form-control::-webkit-input-placeholder {
+  color: #380091;
+}
+.navbar-default .form-control:-moz-placeholder {
+  color: #380091;
+}
+.navbar-default .form-control::-moz-placeholder {
+  color: #380091;
+}
+.navbar-default .form-control:-ms-input-placeholder {
+  color: #380091;
+}
+.navbar-default .form-control {
+  border: none;
+  box-shadow: none;
+  color: #380091;
+}
+.navbar-default .btn-default {
+  border: none;
+  color: #380091;
+}
+.navbar-default .navbar-brand {
+  color: #380091;
+  font-weight: 400;
+}
+.navbar-default .navbar-brand .strong {
+  font-weight: 600;
+}
+.navbar-center {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  text-align: center;
+  margin: auto;
+  margin-top: 8px;
+}
+.nav-justified > li > a {
+  padding-top: 0;
+}
+.nav > li > a:focus,
+.nav > li > a:hover {
+  text-decoration: none;
+  background-color: transparent;
+}

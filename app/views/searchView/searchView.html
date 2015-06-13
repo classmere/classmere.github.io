@@ -1,0 +1,11 @@
+<div ng-controller="navbarCtrl">
+  <div rf-navbar></div>
+</div>
+
+<ul>
+    <li ng-repeat="searchResult in searchResults">
+        <a ng-href="#/course/{{ searchResult.abbr }}">
+            {{ searchResult.title }}
+        </a>
+    </li>
+</ul>
