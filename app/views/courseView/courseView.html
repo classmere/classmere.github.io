@@ -44,7 +44,7 @@
         <tbody>
         <tr ng-repeat="section in course.sections">
           <td>{{ section.days }}</td>
-          <td>{{ section.start_time }} - {{ section.end_time }}</td>
+          <td>{{ section.startTime | date : "h:mm a" }} - {{ section.endTime | date : "h:mm a"}}</td>
           <td>{{ section.location }}</td>
           <td>{{ section.instructor }}</td>
           <td>{{ section.crn }}</td>

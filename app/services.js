@@ -2,11 +2,11 @@
 
 angular.module('myApp.authentication', ['ngResource, ngRoute'])
 
-.factory('authenticationService', function () {
+.factory('authenticationService', function() {
   function checkLoggedIn($q, $timeout, $http, $location, $rootScope) {
     var deferred = $q.defer();
 
-    $http.get('/loggedin').success(function(user){
+    $http.get('/loggedin').success(function(user) {
       if (user !== '0')
         deferred.resolve();
 
