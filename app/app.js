@@ -44,4 +44,4 @@ angular.module('myApp', [
   })
   .otherwise({redirectTo: '/'});
 }])
-.constant('apiServer', 'http://192.168.59.103:3000');
+.constant('apiServer', 'http://classmere.herokuapp.com');
