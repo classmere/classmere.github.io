@@ -1,29 +1,32 @@
 {
-  "name": "angular-seed",
-  "private": true,
+  "name": "web",
   "version": "0.0.0",
-  "description": "A starter project for AngularJS",
-  "repository": "https://github.com/angular/angular-seed",
-  "license": "MIT",
-  "devDependencies": {
-    "karma": "~0.10",
-    "protractor": "^1.1.1",
-    "http-server": "^0.6.1",
-    "shelljs": "^0.2.6",
-    "karma-junit-reporter": "^0.2.2"
-  },
+  "description": "The web frontend that serves as the UI for classmere.",
+  "main": "server.js",
+  "devDependencies": {},
   "scripts": {
-    "prestart": "npm install",
-    "start": "http-server -a localhost -p 8000 -c-1",
-    "pretest": "npm install",
-    "test": "karma start karma.conf.js",
-    "test-single-run": "karma start karma.conf.js  --single-run",
-    "preupdate-webdriver": "npm install",
-    "update-webdriver": "webdriver-manager update",
-    "preprotractor": "npm run update-webdriver",
-    "protractor": "protractor e2e-tests/protractor.conf.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
-  "dependencies": {
-    "passport": "^0.2.2"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/classmere/web.git"
+  },
+  "keywords": [
+    "edubeaver",
+    "classmere",
+    "course",
+    "catalog",
+    "university",
+    "education"
+  ],
+  "author": "rutgerfarry",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/classmere/web/issues"
+  },
+  "homepage": "https://github.com/classmere/web#readme",
+  "jscsConfig": {
+    "validateQuoteMarks": "false"
   }
 }
