@@ -1,8 +1,7 @@
-// jscs:disable
 var CourseInfo = React.createClass({
   render: function() {
     return (
-      <div className="courseInfo">
+      <div className='courseInfo'>
         <h2>
           {this.props.course.abbr} : {this.props.course.title}
         </h2>
@@ -11,7 +10,7 @@ var CourseInfo = React.createClass({
         </p>
       </div>
     );
-  }
+  },
 });
 
 var SectionRow = React.createClass({
@@ -24,17 +23,17 @@ var SectionRow = React.createClass({
         <td>{this.props.section.startTime}</td>
       </tr>
     );
-  }
+  },
 });
 
 var SectionTable = React.createClass({
   render: function() {
     var sectionRows = [ ];
     this.props.sections.forEach(function(section) {
-      sectionRows.push(<SectionRow section={section}/>);
+      sectionRows.push(<SectionRow key={section.crn} section={section}/>);
     });
     return (
-      <table className="courseInfo u-full-width">
+      <table className='courseInfo u-full-width'>
         <thead>
           <tr>
             <th>Term</th>
@@ -48,7 +47,7 @@ var SectionTable = React.createClass({
         </tbody>
       </table>
     );
-  }
+  },
 });
 
 var CoursePage = React.createClass({
@@ -62,7 +61,7 @@ var CoursePage = React.createClass({
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
-      }.bind(this)
+      }.bind(this),
     });
   },
   getInitialState: function() {
@@ -72,9 +71,8 @@ var CoursePage = React.createClass({
     this.loadCourseFromServer();
   },
   render: function() {
-    console.log(this.state.course.sections);
     return (
-      <div className="coursePage container">
+      <div className='coursePage container'>
         <CourseInfo course={this.state.course} />
         <SectionTable sections={this.state.course.sections} />
       </div>
@@ -82,6 +80,6 @@ var CoursePage = React.createClass({
   },
 });
 React.render(
-  <CoursePage url="https://classmere.herokuapp.com/courses/CS%20160" />,
+  <CoursePage url='https://classmere.herokuapp.com/courses/CS%20160' />,
   document.getElementById('content')
 );
