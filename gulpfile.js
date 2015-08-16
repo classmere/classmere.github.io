@@ -1,26 +1,51 @@
-var gulp        = require('gulp');
-var babel       = require('gulp-babel');
-var browserify  = require('gulp-browserify');
+var gulp = require('gulp');
+var sourcemaps = require('gulp-sourcemaps');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
+var browserify = require('browserify');
+var watchify = require('watchify');
+var babel = require('babelify');
 var browserSync = require('browser-sync');
 
-gulp.task('default', function() {
+function compile(watch) {
+  var bundler = watchify(browserify('js/App.js', { debug: true })
+    .transform(babel));
 
-});
+  function rebundle() {
+    bundler.bundle()
+      .on('error', function(err) { console.error(err); this.emit('end'); })
+      .pipe(source('cm.js'))
+      .pipe(buffer())
+      .pipe(sourcemaps.init({ loadMaps: true }))
+      .pipe(sourcemaps.write('.'))
+      .pipe(gulp.dest('./build'));
+  }
 
-gulp.task('babel', function() {
-  return gulp.src('js/CourseDetail.js')
-    .pipe(babel())
-    .pipe(gulp.dest('build'));
-});
+  if (watch) {
+    bundler.on('update', function() {
+      console.log('-> bundling...');
+      rebundle();
+    });
+  }
 
-gulp.task('browserify', ['babel'], function() {
+  rebundle();
+}
 
-});
+function watch() {
+  return compile(true);
+}
 
-gulp.task('serve', ['babel'], function() {
+gulp.task('build', function() { return compile(); });
+gulp.task('watch', function() { return watch(); });
+
+gulp.task('serve', ['watch'], function() {
   browserSync.init({
     server: {
       baseDir: './',
     },
   });
+
+  gulp.watch(['build/*.js', 'build/*.css'], browserSync.reload());
 });
+
+gulp.task('default', ['watch']);

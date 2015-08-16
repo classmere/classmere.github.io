@@ -1,3 +1,5 @@
+var React = require('react');
+
 var CourseInfo = React.createClass({
   render: function() {
     return (
