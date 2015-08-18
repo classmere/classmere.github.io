@@ -1,29 +1,27 @@
-var React = require('react');
-var Router = require('react-router');
-var CourseDetail = require('./CourseDetail').CoursePage;
+import React from 'react';
+import Router from 'react-router';
+import { CoursePage } from './CourseDetail';
 
-var DefaultRoute = Router.DefaultRoute;
-var Link = Router.Link;
-var Route = Router.Route;
-var RouteHandler = Route.RouteHandler;
+const Route = Router.Route;
+const RouteHandler = Router.RouteHandler;
 
 var App = React.createClass({
-  render: function() {
+  render() {
     return (
       <div>
         <h1>classmere</h1>
         <RouteHandler/>
       </div>
     );
-  },
+  }
 });
 
-var routes = (
-  <Route name='app' path='/' handler={App}>
-    <Route name='courseDetail' handler={CourseDetail} />
+const routes = (
+  <Route handler={App}>
+    <Route path='course' handler={CoursePage}/>
   </Route>
 );
 
-Router.run(routes, Router.HistoryLocation, function(Handler) {
-  React.render(<Handler/>, document.body);
-});
+Router.run(routes, Router.HashLocation, (Root) => {
+  React.render(<Root/>, document.getElementById('root'));
+})
