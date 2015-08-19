@@ -1,4 +1,5 @@
 import '../css/custom.css';
+import '../css/main.scss';
 import React from 'react';
 import Router from 'react-router';
 import { HomePage } from './pages/Home';
