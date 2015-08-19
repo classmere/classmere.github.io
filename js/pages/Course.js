@@ -5,9 +5,9 @@ var CourseInfo = React.createClass({
   render: function() {
     return (
       <div className='courseInfo'>
-        <h2>
+        <h3>
           {this.props.course.abbr} : {this.props.course.title}
-        </h2>
+        </h3>
         <p>
           {this.props.course.description}
         </p>
@@ -20,6 +20,7 @@ var SectionRow = React.createClass({
   render: function() {
     return (
       <tr>
+        <td>{this.props.section.type}</td>
         <td>{this.props.section.term}</td>
         <td>{this.props.section.credits}</td>
         <td>{this.props.section.instructor}</td>
@@ -39,6 +40,7 @@ var SectionTable = React.createClass({
       <table className='courseInfo u-full-width'>
         <thead>
           <tr>
+            <th>Type</th>
             <th>Term</th>
             <th>Credits</th>
             <th>Instructor</th>
@@ -56,7 +58,7 @@ var SectionTable = React.createClass({
 export var CoursePage = React.createClass({
   loadCourseFromServer: function() {
     $.ajax({
-      url: 'http://classmere.herokuapp.com/courses/CS%20161',
+      url: `http://classmere.herokuapp.com/courses/${this.props.params.abbr}`,
       dataType: 'json',
       cache: false,
       success: function(course) {
@@ -82,4 +84,3 @@ export var CoursePage = React.createClass({
     );
   }
 });
-
