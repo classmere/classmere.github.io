@@ -32,12 +32,12 @@ const SectionRow = React.createClass({
 
 const SectionTable = React.createClass({
   render: function renderSectionTable() {
-    let sectionRows = [ ];
-    this.props.sections.forEach((section) => {
-      sectionRows.push(<SectionRow key={section.crn} section={section}/>);
+    const sections = this.props.sections;
+    const sectionRows = sections.map(function mapSections(section) {
+      return <SectionRow key={section.crn} section={section}/>;
     });
     return (
-      <Table>
+      <table className="table">
         <thead>
           <tr>
             <th>Type</th>
@@ -50,7 +50,7 @@ const SectionTable = React.createClass({
         <tbody>
           {sectionRows}
         </tbody>
-      </Table>
+      </table>
     );
   },
 });
@@ -71,15 +71,13 @@ export const CoursePage = React.createClass({
     );
   },
   loadCourseFromServer: function loadCourse() {
+    const abbr = this.props.params.abbr;
     $.ajax({
-      url: `http://classmere.herokuapp.com/courses/${this.props.params.abbr}`,
+      url: `http://classmere.herokuapp.com/courses/${abbr}`,
       dataType: 'json',
       cache: false,
       success: (course) => {
         this.setState({course: course});
-      }.bind(this),
-      error: (xhr, status, err) => {
-        console.error(err);
       }.bind(this),
     });
   },
