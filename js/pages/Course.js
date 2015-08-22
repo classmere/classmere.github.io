@@ -1,10 +1,10 @@
 import React from 'react';
 import $ from 'jquery';
 
-var CourseInfo = React.createClass({
-  render: function() {
+const CourseInfo = React.createClass({
+  render: function renderCourseInfo() {
     return (
-      <div className='courseInfo'>
+      <div className="courseInfo">
         <h3>
           {this.props.course.abbr} : {this.props.course.title}
         </h3>
@@ -13,11 +13,11 @@ var CourseInfo = React.createClass({
         </p>
       </div>
     );
-  }
+  },
 });
 
-var SectionRow = React.createClass({
-  render: function() {
+const SectionRow = React.createClass({
+  render: function renderSectionRow() {
     return (
       <tr>
         <td>{this.props.section.type}</td>
@@ -27,17 +27,17 @@ var SectionRow = React.createClass({
         <td>{this.props.section.startTime}</td>
       </tr>
     );
-  }
+  },
 });
 
-var SectionTable = React.createClass({
-  render: function() {
-    var sectionRows = [ ];
-    this.props.sections.forEach(function(section) {
+const SectionTable = React.createClass({
+  render: function renderSectionTable() {
+    let sectionRows = [ ];
+    this.props.sections.forEach((section) => {
       sectionRows.push(<SectionRow key={section.crn} section={section}/>);
     });
     return (
-      <table className='courseInfo u-full-width'>
+      <Table>
         <thead>
           <tr>
             <th>Type</th>
@@ -50,37 +50,37 @@ var SectionTable = React.createClass({
         <tbody>
           {sectionRows}
         </tbody>
-      </table>
+      </Table>
     );
-  }
+  },
 });
 
-export var CoursePage = React.createClass({
-  loadCourseFromServer: function() {
-    $.ajax({
-      url: `http://classmere.herokuapp.com/courses/${this.props.params.abbr}`,
-      dataType: 'json',
-      cache: false,
-      success: function(course) {
-        this.setState({course: course});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(err);
-      }.bind(this)
-    });
-  },
-  getInitialState: function() {
+export const CoursePage = React.createClass({
+  getInitialState: function getCoursePageState() {
     return {course: {sections: []}};
   },
-  componentDidMount: function() {
+  componentDidMount: function coursePageDidMount() {
     this.loadCourseFromServer();
   },
-  render: function() {
+  render: function renderCoursePage() {
     return (
-      <div className='coursePage container'>
+      <div className="coursePage container">
         <CourseInfo course={this.state.course} />
         <SectionTable sections={this.state.course.sections} />
       </div>
     );
-  }
+  },
+  loadCourseFromServer: function loadCourse() {
+    $.ajax({
+      url: `http://classmere.herokuapp.com/courses/${this.props.params.abbr}`,
+      dataType: 'json',
+      cache: false,
+      success: (course) => {
+        this.setState({course: course});
+      }.bind(this),
+      error: (xhr, status, err) => {
+        console.error(err);
+      }.bind(this),
+    });
+  },
 });

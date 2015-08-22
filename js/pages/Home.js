@@ -1,9 +1,9 @@
 import React from 'react';
 
-export var HomePage = React.createClass({
-  render: function() {
+export const HomePage = React.createClass({
+  render: function renderHomePage() {
     return (
-      <h1>HOME!</h1>
+      <h1 className="display-3">Welcome to classmere</h1>
     );
-  }
+  },
 });
