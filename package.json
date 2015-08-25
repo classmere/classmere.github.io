@@ -1,29 +1,46 @@
 {
-  "name": "angular-seed",
-  "private": true,
+  "name": "web",
   "version": "0.0.0",
-  "description": "A starter project for AngularJS",
-  "repository": "https://github.com/angular/angular-seed",
-  "license": "MIT",
-  "devDependencies": {
-    "karma": "~0.10",
-    "protractor": "^1.1.1",
-    "http-server": "^0.6.1",
-    "shelljs": "^0.2.6",
-    "karma-junit-reporter": "^0.2.2"
-  },
+  "description": "The web frontend that serves as the UI for classmere.",
   "scripts": {
-    "prestart": "npm install",
-    "start": "http-server -a localhost -p 8000 -c-1",
-    "pretest": "npm install",
-    "test": "karma start karma.conf.js",
-    "test-single-run": "karma start karma.conf.js  --single-run",
-    "preupdate-webdriver": "npm install",
-    "update-webdriver": "webdriver-manager update",
-    "preprotractor": "npm run update-webdriver",
-    "protractor": "protractor e2e-tests/protractor.conf.js"
+    "start": "node server.js",
+    "lint": "eslint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/classmere/web.git"
+  },
+  "keywords": [
+    "edubeaver",
+    "classmere",
+    "course",
+    "catalog",
+    "university",
+    "education"
+  ],
+  "author": "Rutger Farry <rutgerfarry@gmail.com> (http://github.com/rutgerfarry)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/classmere/web/issues"
+  },
+  "homepage": "https://github.com/classmere/web#readme",
+  "devDependencies": {
+    "babel-core": "^5.4.7",
+    "babel-eslint": "^4.0.10",
+    "babel-loader": "^5.1.2",
+    "css-loader": "^0.16.0",
+    "eslint": "^1.2.0",
+    "eslint-config-airbnb": "0.0.7",
+    "eslint-plugin-react": "^3.2.3",
+    "react-hot-loader": "^1.2.7",
+    "sass-loader": "^2.0.1",
+    "style-loader": "^0.12.3",
+    "webpack": "^1.9.6",
+    "webpack-dev-server": "^1.8.2"
   },
   "dependencies": {
-    "passport": "^0.2.2"
+    "jquery": "^2.1.4",
+    "react": "^0.13.3",
+    "react-router": "^0.13.3"
   }
 }
