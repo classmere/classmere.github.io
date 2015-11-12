@@ -6,7 +6,7 @@ const CourseInfo = React.createClass({
     return (
       <div className="courseInfo">
         <h3>
-          {this.props.course.abbr} : {this.props.course.title}
+          {this.props.course.subjectCode} : {this.props.course.title}
         </h3>
         <p>
           {this.props.course.description}
@@ -70,10 +70,13 @@ export const CoursePage = React.createClass({
       </div>
     );
   },
+  //
+  // This API call does not work therefore it does not load the page properly
+  //
   loadCourseFromServer: function loadCourse() {
     const abbr = this.props.params.abbr;
     $.ajax({
-      url: `http://classmere.herokuapp.com/courses/${abbr}`,
+      url: `http://api.classmere.com/courses/${abbr}`,
       dataType: 'json',
       cache: false,
       success: (course) => {

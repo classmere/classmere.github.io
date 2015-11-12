@@ -2,7 +2,10 @@ import React from 'react';
 import { Link } from 'react-router';
 import $ from 'jquery';
 
+// Each class section is a card.
+// This is the Card builder function
 const SearchCard = React.createClass({
+
   getDefaultProps: function searchCardDefaultProps() {
     return { result: {} };
   },
@@ -12,9 +15,13 @@ const SearchCard = React.createClass({
       <div className="card">
         <div className="card-block">
           <Link to="course"
-          params={{abbr: encodeURI(result.abbr)}}
-          className="card-title h4">
-            {result.abbr} : {result.title}
+              params={
+                abbr: encodeURI(result.subjectCode),
+                title: result.title,
+                description: result.description
+              }
+              className="card-title h4">
+              {result.subjectCode}{result.courseNumber} - {result.title}
           </Link>
           <p className="card-text">{result.description}</p>
         </div>
@@ -30,7 +37,7 @@ export const SearchPage = React.createClass({
   componentDidMount: function searchPageDidMount() {
     const searchTerm = this.props.params.searchTerm;
     $.ajax({
-      url: `http://classmere.herokuapp.com/search/courses/${searchTerm}`,
+      url: `http://api.classmere.com/search/courses/${searchTerm}`,
       dataType: 'json',
       cache: false,
       success: (results) => {
