@@ -6,7 +6,7 @@ const CourseInfo = React.createClass({
     return (
       <div className="courseInfo">
         <h3>
-          {this.props.course.subjectCode} : {this.props.course.title}
+          {this.props.course.subjectCode} {this.props.course.courseNumber} : {this.props.course.title}
         </h3>
         <p>
           {this.props.course.description}
@@ -24,7 +24,9 @@ const SectionRow = React.createClass({
         <td>{this.props.section.term}</td>
         <td>{this.props.section.credits}</td>
         <td>{this.props.section.instructor}</td>
-        <td>{this.props.section.startTime}</td>
+        <td>
+            {this.props.section.meetingTimes[0].startTime}
+        </td>
       </tr>
     );
   },
@@ -74,9 +76,11 @@ export const CoursePage = React.createClass({
   // This API call does not work therefore it does not load the page properly
   //
   loadCourseFromServer: function loadCourse() {
-    const abbr = this.props.params.abbr;
+    //const abbr = this.props.params.abbr;
+    const subjectCode = this.props.params.subjectCode;
+    const courseNumber = this.props.params.courseNumber;
     $.ajax({
-      url: `http://api.classmere.com/courses/${abbr}`,
+      url: `http://api.classmere.com/courses/${subjectCode}/${courseNumber}`,
       dataType: 'json',
       cache: false,
       success: (course) => {

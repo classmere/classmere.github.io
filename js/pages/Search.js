@@ -15,11 +15,12 @@ const SearchCard = React.createClass({
       <div className="card">
         <div className="card-block">
           <Link to="course"
-              params={
-                abbr: encodeURI(result.subjectCode),
-                title: result.title,
-                description: result.description
-              }
+              // pass subject code and course number attributes to course.js
+              params={{
+                //abbr: encodeURI(result.abbr),
+                subjectCode: encodeURI(result.subjectCode),
+                courseNumber: encodeURI(result.courseNumber),
+              }}
               className="card-title h4">
               {result.subjectCode}{result.courseNumber} - {result.title}
           </Link>
@@ -50,7 +51,7 @@ export const SearchPage = React.createClass({
   render: function renderSearchPage() {
     const results = this.state.searchResults;
     const resultCards = results.map(function mapResults(result) {
-      return <SearchCard key={result.abbr} result={result}/>;
+      return <SearchCard key={result.subjectCode + result.courseNumber} result={result}/>;
     });
     return (
       <div className="container">
