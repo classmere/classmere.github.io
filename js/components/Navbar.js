@@ -22,9 +22,10 @@ const ClassmereSearchInput = React.createClass({
     this.setState({ text: event.target.value });
   },
   handleKeyDown: function handleEnterPressed(event) {
+    // when enter is pressed
     if (event.keyCode === 13) {
       this.transitionTo('search', {searchTerm: this.state.text});
-      this.setState({ text: '' });
+      //this.setState({ text: '' });
     }
   },
 });

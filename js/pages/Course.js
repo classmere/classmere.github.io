@@ -18,15 +18,68 @@ const CourseInfo = React.createClass({
 
 const SectionRow = React.createClass({
   render: function renderSectionRow() {
+    // variables for readability
+    var section = this.props.section;
+    var meetingTimes = section.meetingTimes;
+
+    // if meeting times is more than once, map it
+    var startTimes = meetingTimes.map( function mapStartTimes(MT){
+        // if the section does nto have a meeting day, show blank
+        var days = MT.days;
+        if(days === "TBA"){
+            return(
+                <div key={days}></div>
+            )
+        // if the section does have a meeting day, print time pretty
+        } else{
+            var start = new Date(MT.startTime);
+            var end = new Date(MT.endTime);
+            var options = {hour: '2-digit', minute: '2-digit'};
+            return(
+                <div key={days+start+end}>
+                    { days + " " + start.toLocaleTimeString('en-US', options) + " - " + end.toLocaleTimeString('en-US', options)}
+                </div>
+            )
+        }
+    });
+    // location grabber for each section, grabs roomnumber +  building
+    var getLocation = meetingTimes.map(function mapLocation(MT){
+        var room = MT.roomNumber;
+        var building = MT.buildingCode;
+        // if class type is WWW room will be null, just show blank instead.
+        if( room === null ){
+            room = "";
+            building = "";
+        }
+        return(
+            <div>
+                { room + " " + building }
+            </div>
+        )
+    });
+
+    // get enrollment and waitlist statuses
+    // if null make 0 to prettify
+    var enrolled = section.currentEnrollment;
+    if(enrolled === null){ enrolled = 0; }
+    var capacity = section.capacity;
+    if(capacity === null){ capacity = 0; }
+    var waitlist = section.waitlistCurrent;
+    if(waitlist === null){ waitlist = 0; }
+    var wlCapacity = section.waitlistCapacity;
+    if(wlCapacity === null){ wlCapacity = 0; }
+
     return (
       <tr>
-        <td>{this.props.section.type}</td>
         <td>{this.props.section.term}</td>
-        <td>{this.props.section.credits}</td>
+        <td>{this.props.section.type}</td>
+        <td>{this.props.section.crn}</td>
+        <td>{getLocation}</td>
+        <td>{startTimes}</td>
         <td>{this.props.section.instructor}</td>
-        <td>
-            {this.props.section.meetingTimes[0].startTime}
-        </td>
+        <td>{this.props.section.credits}</td>
+        <td>{enrolled}/{capacity}</td>
+        <td>{waitlist}/{wlCapacity}</td>
       </tr>
     );
   },
@@ -38,15 +91,20 @@ const SectionTable = React.createClass({
     const sectionRows = sections.map(function mapSections(section) {
       return <SectionRow key={section.crn} section={section}/>;
     });
+
     return (
-      <table className="table">
+      <table className="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
-            <th>Type</th>
             <th>Term</th>
-            <th>Credits</th>
-            <th>Instructor</th>
+            <th>Type</th>
+            <th>CRN</th>
+            <th>Location</th>
             <th>Time</th>
+            <th>Instructor</th>
+            <th>Credits</th>
+            <th>Enrolled</th>
+            <th>Waitlist</th>
           </tr>
         </thead>
         <tbody>
