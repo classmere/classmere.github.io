@@ -19,8 +19,9 @@ const CourseInfo = React.createClass({
 const SectionRow = React.createClass({
   render: function renderSectionRow() {
     // variables for readability
-    var section = this.props.section;
-    var meetingTimes = section.meetingTimes;
+    const section = this.props.section;
+    const meetingTimes = section.meetingTimes;
+    const term = this.props.term;
 
     // if meeting times is more than once, map it
     var startTimes = meetingTimes.map( function mapStartTimes(MT){
@@ -69,27 +70,33 @@ const SectionRow = React.createClass({
     var wlCapacity = section.waitlistCapacity;
     if(wlCapacity === null){ wlCapacity = 0; }
 
-    return (
-      <tr>
-        <td>{this.props.section.term}</td>
-        <td>{this.props.section.type}</td>
-        <td>{this.props.section.crn}</td>
-        <td>{getLocation}</td>
-        <td>{startTimes}</td>
-        <td>{this.props.section.instructor}</td>
-        <td>{this.props.section.credits}</td>
-        <td>{enrolled}/{capacity}</td>
-        <td>{waitlist}/{wlCapacity}</td>
-      </tr>
-    );
+    // if the term matches the URL term, return the data otherwise return nothing
+    if(term == this.props.section.term || term == "all"){
+        return (
+          <tr>
+            <td>{this.props.section.term}</td>
+            <td>{this.props.section.type}</td>
+            <td>{this.props.section.crn}</td>
+            <td>{getLocation}</td>
+            <td>{startTimes}</td>
+            <td>{this.props.section.instructor}</td>
+            <td>{this.props.section.credits}</td>
+            <td>{enrolled}/{capacity}</td>
+            <td>{waitlist}/{wlCapacity}</td>
+          </tr>
+        );
+    } else{
+        return <tr></tr>;
+    }
   },
 });
 
 const SectionTable = React.createClass({
   render: function renderSectionTable() {
     const sections = this.props.sections;
+    const term = this.props.term;
     const sectionRows = sections.map(function mapSections(section) {
-      return <SectionRow key={section.crn} section={section}/>;
+      return <SectionRow key={section.crn} term={term} section={section}/>;
     });
 
     return (
@@ -126,7 +133,7 @@ export const CoursePage = React.createClass({
     return (
       <div className="coursePage container">
         <CourseInfo course={this.state.course} />
-        <SectionTable sections={this.state.course.sections} />
+        <SectionTable term={this.props.params.quarterTerm} sections={this.state.course.sections} />
       </div>
     );
   },
@@ -134,7 +141,6 @@ export const CoursePage = React.createClass({
   // This API call does not work therefore it does not load the page properly
   //
   loadCourseFromServer: function loadCourse() {
-    //const abbr = this.props.params.abbr;
     const subjectCode = this.props.params.subjectCode;
     const courseNumber = this.props.params.courseNumber;
     $.ajax({

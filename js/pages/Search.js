@@ -11,13 +11,14 @@ const SearchCard = React.createClass({
   },
   render: function renderSearchCard() {
     const result = this.props.result;
+    const term = this.props.term;
     return (
       <div className="card">
         <div className="card-block">
           <Link to="course"
               // pass subject code and course number attributes to course.js
               params={{
-                //abbr: encodeURI(result.abbr),
+                quarterTerm: encodeURI(term),
                 subjectCode: encodeURI(result.subjectCode),
                 courseNumber: encodeURI(result.courseNumber),
               }}
@@ -50,8 +51,12 @@ export const SearchPage = React.createClass({
   },
   render: function renderSearchPage() {
     const results = this.state.searchResults;
+    // Grab the quarter term from the URL and pass it to the search card
+    // for proper URL linking. Remove me if somebody can figure out how to get the URL
+    // params from the inner component.
+    const term = this.props.params.quarterTerm;
     const resultCards = results.map(function mapResults(result) {
-      return <SearchCard key={result.subjectCode + result.courseNumber} result={result}/>;
+      return <SearchCard key={term + result.subjectCode + result.courseNumber} term={term} result={result}/>;
     });
     return (
       <div className="container">

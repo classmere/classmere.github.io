@@ -22,8 +22,10 @@ const App = React.createClass({
 const routes = (
   <Route handler={App}>
     <Route path="/" handler={HomePage} name="home"/>
-    <Route path="search/:searchTerm" handler={SearchPage} name="search"/>
-    <Route path="course/:subjectCode/:courseNumber" handler={CoursePage} name="course"/>
+        <Route path=":quarterTerm">
+            <Route path="search/:searchTerm" handler={SearchPage} name="search"/>
+            <Route path="course/:subjectCode/:courseNumber" handler={CoursePage} name="course"/>
+        </Route>
   </Route>
 );
 
