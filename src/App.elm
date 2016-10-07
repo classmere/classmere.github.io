@@ -57,12 +57,15 @@ view : Model -> Html Msg
 view model =
   div [] 
     [ input [ placeholder "Search for courses...", onInput Search ] []
-    , div [ class "results" ] [ text (toString model.results) ]
+    , table [ class "results" ] (List.map renderCourse model.results)
     ]
 
-result : String -> Html msg
-result course =
-  tr [] [ text course ]
+renderCourse : Course -> Html Msg
+renderCourse course =
+  tr [] 
+    [ td [] [ text course.title ] 
+    , td [] [ text course.description ]
+    ]
 
 
 -- SUBSCRIPTIONS
