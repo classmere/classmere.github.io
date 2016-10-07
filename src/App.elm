@@ -26,11 +26,6 @@ type alias Model =
   }
 
 
--- REMOVE LATER
-emptyCourse : Course
-emptyCourse = Course "id" "title" "subjectCode" 0 "credits" "description"
-
-
 -- UPDATE
 
 type Msg 
@@ -42,7 +37,7 @@ update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
     Search searchText ->
-      (Model searchText [ emptyCourse ], searchCourse searchText)
+      (Model searchText [], searchCourse searchText)
 
     SearchSucceed resultJson ->
       (Model model.searchText resultJson, Cmd.none)
@@ -79,7 +74,7 @@ subscriptions model =
 
 init : (Model, Cmd Msg)
 init =
-  (Model "" [ emptyCourse ], Cmd.none)
+  (Model "" [], Cmd.none)
 
 
 -- HTTP
