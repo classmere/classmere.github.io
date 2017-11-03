@@ -7,10 +7,10 @@ import ClassmereData.Models exposing (Course)
 courseDecoder : Decoder (List Course)
 courseDecoder =
   Json.Decode.list
-    (object6 Course
-      ("_id" := string)
-      ("title" := string)
-      ("subjectCode" := string)
-      ("courseNumber" := int)
-      ("credits" := string)
-      ("description" := string))
+    (map6 Course
+      (field "_id" string)
+      (field "title" string)
+      (field "subjectCode" string)
+      (field "courseNumber" int)
+      (field "credits" string)
+      (field "description" string))
