@@ -2,13 +2,16 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Http
-import Json.Decode as Decode
+
+import ClassmereData.Models exposing (Course, Section)
+import ClassmereData.Decoders exposing (courseDecoder)
+
 
 
 main : Program Never Model Msg
 main =
   Html.program
-    { init = init "cats"
+    { init = init
     , view = view
     , update = update
     , subscriptions = subscriptions
@@ -18,18 +21,10 @@ main =
 
 -- MODEL
 
-
 type alias Model =
-  { topic : String
-  , gifUrl : String
+  { searchText : String
+  , results : List Course
   }
-
-
-init : String -> (Model, Cmd Msg)
-init topic =
-  ( Model topic "waiting.gif"
-  , getRandomGif topic
-  )
 
 
 
@@ -37,24 +32,20 @@ init topic =
 
 
 type Msg
-  = MorePlease
-  | TopicChange String
-  | NewGif (Result Http.Error String)
+  = Search String
+  | NewSearchResults (Result Http.Error (List Course))
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
-    MorePlease ->
-      (model, getRandomGif model.topic)
+    Search searchTerm ->
+      (model, searchCourse searchTerm)
 
-    TopicChange (newTopic) ->
-      (Model newTopic model.gifUrl, getRandomGif newTopic)
+    NewSearchResults (Ok courseList) ->
+      ({ model | results = courseList }, Cmd.none)
 
-    NewGif (Ok newUrl) ->
-      (Model model.topic newUrl, Cmd.none)
-
-    NewGif (Err _) ->
+    NewSearchResults (Err _) ->
       (model, Cmd.none)
 
 
@@ -64,11 +55,17 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-  div []
-    [ input [placeholder model.topic, onInput TopicChange] [text model.topic]
-    , button [ onClick MorePlease ] [ text "More Please!" ]
-    , br [] []
-    , img [src model.gifUrl] []
+  div [] 
+    [ input [ placeholder "Search for courses...", onInput Search ] []
+    , table [ class "results" ] (List.map renderCourse model.results)
+    ]
+
+
+renderCourse : Course -> Html Msg
+renderCourse course =
+  tr [] 
+    [ td [] [ text course.title ] 
+    , td [] [ text course.description ]
     ]
 
 
@@ -82,18 +79,23 @@ subscriptions model =
 
 
 
+
 -- HTTP
 
 
-getRandomGif : String -> Cmd Msg
-getRandomGif topic =
+searchCourse : String -> Cmd Msg
+searchCourse searchTerm =
   let
     url =
-      "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" ++ topic
+      "http://api.classmere.com/search/courses/" ++ searchTerm
   in
-    Http.send NewGif (Http.get url decodeGifUrl)
+     Http.send NewSearchResults (Http.get url courseDecoder)
 
 
-decodeGifUrl : Decode.Decoder String
-decodeGifUrl =
-  Decode.at ["data", "image_url"] Decode.string
+
+-- INIT
+
+
+init : (Model, Cmd Msg)
+init =
+    (Model "" [], Cmd.none)
