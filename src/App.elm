@@ -87,7 +87,7 @@ searchCourse : String -> Cmd Msg
 searchCourse searchTerm =
   let
     url =
-      "http://api.classmere.com/search/courses/" ++ searchTerm
+      "https://api.classmere.com/search/courses/" ++ searchTerm
   in
      Http.send NewSearchResults (Http.get url courseDecoder)
 
