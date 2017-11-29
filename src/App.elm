@@ -122,10 +122,13 @@ homePage model =
 
 renderCourse : Course -> Html Msg
 renderCourse course =
-  tr [] 
-    [ td [] [ text course.title ] 
-    , td [] [ text course.description ]
-    ]
+  let url =
+    "#courses/" ++ course.subjectCode ++ "/" ++ (toString course.courseNumber)
+  in
+    tr [] 
+      [ td [] [ a [ href url ][ text course.title ]]
+      , td [] [ text course.description ]
+      ]
 
 
 courseDetailPage : String -> Int -> Html Msg
@@ -165,7 +168,7 @@ getSearchCourse searchTerm =
     url =
       baseUrl ++ "/search/courses/" ++ searchTerm
   in
-     Http.send GotSearchResults (Http.get url courseListDecoder)
+    Http.send GotSearchResults (Http.get url courseListDecoder)
 
 
 getCourseDetail : String -> Int -> Cmd Msg
