@@ -8,6 +8,7 @@ type alias Course =
   , courseNumber : Int
   , credits : String
   , description : String
+  --, sections : (Maybe (List Section))
   }
 
 type alias Section =
@@ -23,7 +24,7 @@ type alias Section =
   , status : String
   , enrollmentCapacity : Int
   , enrollmentCurrent : Int
-  , waitlistCapacity :Int
+  , waitlistCapacity : Int
   , waitlistCurrent : Int
   , fees : String
   , restrictions : String

@@ -1,16 +1,21 @@
-module ClassmereData.Decoders exposing ( courseDecoder )
+module ClassmereData.Decoders exposing ( courseDecoder, courseListDecoder )
 
 
 import Json.Decode exposing (..)
-import ClassmereData.Models exposing (Course)
+import Json.Decode.Pipeline exposing (..)
 
-courseDecoder : Decoder (List Course)
+
+import ClassmereData.Models exposing ( Course, Section )
+
+courseDecoder : Decoder Course
 courseDecoder =
-  Json.Decode.list
-    (map6 Course
-      (field "_id" string)
-      (field "title" string)
-      (field "subjectCode" string)
-      (field "courseNumber" int)
-      (field "credits" string)
-      (field "description" string))
+  decode Course
+    |> required "_id" string
+    |> required "title" string
+    |> required "subjectCode" string
+    |> required "courseNumber" int
+    |> required "credits" string
+    |> required "description" string
+
+courseListDecoder : Decoder (List Course)
+courseListDecoder = list courseDecoder
